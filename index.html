@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Queres ser o meu Valentine? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #fce4ec 0%, #f8bbd0 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Floating hearts and decorations */
+        .decoration {
+            position: absolute;
+            pointer-events: none;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        .heart-small {
+            font-size: 24px;
+            opacity: 0.6;
+        }
+
+        .sparkle {
+            font-size: 20px;
+            opacity: 0.4;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .decoration:nth-child(1) { top: 10%; left: 10%; animation-delay: 0s; }
+        .decoration:nth-child(2) { top: 15%; left: 80%; animation-delay: 0.5s; }
+        .decoration:nth-child(3) { top: 70%; left: 5%; animation-delay: 1s; }
+        .decoration:nth-child(4) { top: 75%; right: 10%; animation-delay: 1.5s; }
+        .decoration:nth-child(5) { top: 30%; left: 15%; animation-delay: 0.3s; }
+        .decoration:nth-child(6) { top: 85%; left: 85%; animation-delay: 0.8s; }
+        .decoration:nth-child(7) { top: 5%; left: 50%; animation-delay: 1.2s; }
+        .decoration:nth-child(8) { top: 60%; right: 20%; animation-delay: 0.6s; }
+
+        .container {
+            background: white;
+            border-radius: 30px;
+            padding: 50px 40px;
+            box-shadow: 0 20px 60px rgba(233, 30, 99, 0.3);
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            border: 3px solid #f8bbd0;
+            position: relative;
+            z-index: 1;
+        }
+
+        .image-container {
+            width: 200px;
+            height: 200px;
+            margin: 0 auto 30px;
+            position: relative;
+        }
+
+        .profile-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 4px solid #f8bbd0;
+        }
+
+        .heart-badge {
+            position: absolute;
+            bottom: 10px;
+            right: 10px;
+            background: #ff6b9d;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            border: 3px solid white;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        h1 {
+            color: #e91e63;
+            font-size: 2.5em;
+            margin-bottom: 15px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #757575;
+            font-size: 1.1em;
+            margin-bottom: 40px;
+        }
+
+        .buttons-container {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+            min-height: 150px;
+            position: relative;
+        }
+
+
+        button {
+            padding: 18px 50px;
+            font-size: 1.3em;
+            font-weight: 600;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+        }
+
+        .yes-button {
+            background: linear-gradient(135deg, #ff6b9d 0%, #e91e63 100%);
+            color: white;
+            box-shadow: 0 10px 25px rgba(233, 30, 99, 0.4);
+        }
+
+        .yes-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(233, 30, 99, 0.5);
+        }
+
+        .yes-button:active {
+            transform: translateY(-1px);
+        }
+
+        .no-button {
+            background: #e3f2fd;
+            color: #424242;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+
+        .no-button:hover {
+            background: #bbdefb;
+        }
+
+        .footer {
+            margin-top: 30px;
+            color: #ff6b9d;
+            font-size: 0.95em;
+        }
+
+        /* Success message */
+        .success-message {
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+
+        .success-message.active {
+            display: block;
+        }
+
+        .success-message h2 {
+            color: #e91e63;
+            font-size: 2em;
+            margin-bottom: 20px;
+        }
+
+        .success-message p {
+            color: #757575;
+            font-size: 1.2em;
+            line-height: 1.6;
+        }
+
+        .celebration {
+            font-size: 3em;
+            margin: 20px 0;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        /* Warning message */
+        .warning-message {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(233, 30, 99, 0.95);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 15px;
+            font-size: 1.3em;
+            font-weight: 600;
+            display: none;
+            z-index: 1000;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: shake 0.5s ease-in-out;
+        }
+
+        .warning-message.show {
+            display: block;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translate(-50%, -50%) rotate(0deg); }
+            25% { transform: translate(-50%, -50%) rotate(-5deg); }
+            75% { transform: translate(-50%, -50%) rotate(5deg); }
+        }
+
+        /* Responsive */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2em;
+            }
+
+            .buttons-container {
+                flex-direction: column;
+            }
+
+            button {
+                width: 100%;
+                padding: 15px 40px;
+            }
+
+            .no-button {
+                position: relative;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Decorative elements -->
+    <div class="decoration heart-small">💕</div>
+    <div class="decoration sparkle">✨</div>
+    <div class="decoration heart-small">💗</div>
+    <div class="decoration heart-small">💖</div>
+    <div class="decoration sparkle">✨</div>
+    <div class="decoration heart-small">💕</div>
+    <div class="decoration sparkle">⭐</div>
+    <div class="decoration heart-small">💝</div>
+
+    <div class="container">
+        <div id="question-content">
+            <div class="image-container">
+                <div class="profile-image" style="display:flex; align-items:center; justify-content:center; font-size:90px; color:#e91e63;">
+                    ♥
+                </div>
+                <div class="heart-badge">❤️</div>
+            </div>
+
+            <h1>Queres ser o meu Valentine? 🎀</h1>
+            <p class="subtitle">Prometo muito sushi, carinho e momentos fofos! 🍣</p>
+
+            <div class="buttons-container">
+                <button class="yes-button" onclick="acceptValentine()">SIM! 💕</button>
+                <button class="no-button" id="noButton" onclick="handleNoClick()">NÃO</button>
+            </div>
+
+            <p class="footer">Feito para o meu amor</p>
+        </div>
+
+        <div id="success-message" class="success-message">
+            <div class="celebration">💕💕💕</div>
+            <h2>Sabia que ias dizer que SIM!</h2>
+            <p>Estou tão feliz! Vamos ter o melhor Valentine's Day de sempre! 💖</p>
+            <p style="margin-top: 20px;">Prepara-te para muito sushi, carinho e momentos inesquecíveis! 🍣</p>
+            <div class="celebration">💗💗💗</div>
+        </div>
+    </div>
+
+    <div class="warning-message" id="warningMessage">   
+        Tenta outra vez! 
+    </div>
+
+    <script>
+        const noButton = document.getElementById('noButton');
+        const warningMessage = document.getElementById('warningMessage');
+
+        let isMobile = window.innerWidth <= 600;
+
+        window.addEventListener('resize', () => {
+            isMobile = window.innerWidth <= 600;
+        });
+
+        function moveButtonRandom() {
+
+            const padding = 20; // margem de segurança
+
+            const maxX = window.innerWidth - noButton.offsetWidth - padding;
+            const maxY = window.innerHeight - noButton.offsetHeight - padding;
+
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+
+            noButton.style.position = "fixed";
+            noButton.style.left = randomX + "px";
+            noButton.style.top = randomY + "px";
+        }
+
+        // Fugir quando o rato chega perto
+        document.addEventListener('mousemove', (e) => {
+
+            if (isMobile) return;
+
+            const rect = noButton.getBoundingClientRect();
+
+            const mouseX = e.clientX;
+            const mouseY = e.clientY;
+
+            const buttonCenterX = rect.left + rect.width / 2;
+            const buttonCenterY = rect.top + rect.height / 2;
+
+            const distance = Math.hypot(mouseX - buttonCenterX, mouseY - buttonCenterY);
+
+            const triggerDistance = 120; // distância para fugir
+
+            if (distance < triggerDistance) {
+                moveButtonRandom();
+            }
+        });
+
+        function handleNoClick() {
+
+            warningMessage.classList.add('show');
+
+            setTimeout(() => {
+                warningMessage.classList.remove('show');
+            }, 1500);
+        }
+
+        function acceptValentine() {
+            const questionContent = document.getElementById('question-content');
+            const successMessage = document.getElementById('success-message');
+
+            questionContent.style.display = 'none';
+            successMessage.classList.add('active');
+        }
+
+    </script>
+</body>
+</html>
